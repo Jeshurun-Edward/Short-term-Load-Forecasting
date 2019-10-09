@@ -25,7 +25,7 @@ plot_data=l[1:1533,50:]
 plot_data=plot_data.flatten()
 plot_data=np.array(plot_data).astype(float)
 
-
+#scaling
 from sklearn.preprocessing import MinMaxScaler
 scaler=MinMaxScaler(feature_range=(0,1))
 l1=scaler.fit_transform(l1)
@@ -53,6 +53,7 @@ testX, testY = create_dataset(l_test, look_back)
 trainX = np.reshape(trainX, (trainX.shape[0], 31, 1))
 testX = np.reshape(testX, (testX.shape[0], 31, 1))
 
+#Trained Model is Loaded
 from sklearn.metrics import mean_squared_error
 import math
 from keras import metrics
@@ -63,7 +64,7 @@ score=model.evaluate(testX,testY)
 print(score)
 
 
-
+#True values from scaled values
 pred=model.predict(testX)
 pred = scaler.inverse_transform(pred)
 testY = scaler.inverse_transform([testY])

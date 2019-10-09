@@ -1,3 +1,7 @@
+'''
+An LSTM network is used to predict hourly load values. 
+'''
+
 import csv
 load=open('F:/to do/load/kaggle/Load_history1.csv')
 lread=csv.reader(load)
@@ -10,6 +14,7 @@ tdata=list(tread)
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Input data
 l=np.asarray(ldata)
 l1=l[1:65,50:]
 l1=l1.flatten()
@@ -24,7 +29,7 @@ l_test=np.array(l_test).astype(float)
 #plot_data=plot_data.flatten()
 #plot_data=np.array(plot_data).astype(float)
 
-
+# Scaling the inputs
 from sklearn.preprocessing import MinMaxScaler 
 scaler=MinMaxScaler(feature_range=(0,1))
 l1=scaler.fit_transform(l1)
@@ -52,6 +57,7 @@ testX, testY = create_dataset(l_test, past)
 trainX = np.reshape(trainX, (trainX.shape[0], 31, 1))
 testX = np.reshape(testX, (testX.shape[0], 31, 1))
 
+#Model is created and trained
 model=Sequential()
 model.add(LSTM(24,batch_input_shape=(32,31,1),return_sequences=True,stateful=True))
 model.add(Flatten())
